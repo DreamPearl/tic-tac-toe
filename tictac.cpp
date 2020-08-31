@@ -5,11 +5,11 @@
 #include <iostream>
 
 using namespace std;
-void print_matrix(int);
-void print_com(int);
+void assign_matrix(int,char);
+void print_matrix();
 int check(int);
 int win();
-void random();
+int random();
 char a[3][3] = {
   ' ',
   ' ',
@@ -22,68 +22,67 @@ char a[3][3] = {
   ' '
 };
 int x, randomnum;
+char y='X',z='O';
 
 int main() {
   x = 0;
-  print_matrix(x);
+  print_matrix();
   cout << "\n\n";
   cin >> x;
+  	assign_matrix(x,y);
   cout << endl << endl;
-  print_matrix(x);
+  print_matrix();
+  int rn;
   for (int i = 0; i < 4; i++) {
-    random();
+  rn= random();
+     assign_matrix(rn,z);
+    print_matrix();
     win();
     cin >> x;
+   	assign_matrix(x,y);
     cout << endl << endl;
-    print_matrix(x);
+    print_matrix();
     win();
   }
 }
-
-void print_matrix(int x) {
-  if (x == 0) {
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        {
-          cout << a[i][j];
-          if (j < 2)
-            cout << "|";
-        }
-      }
-      if (i < 2)
-        cout << "\n-----\n";
-    }
-  } else {
-    switch (x) {
+ 
+void assign_matrix(int x,char m)
+{
+switch (x)
+ {
     case 7:
-      a[0][0] = 'X';
+      a[0][0] = m;
       break;
     case 8:
-      a[0][1] = 'X';
+      a[0][1] = m;
       break;
     case 9:
-      a[0][2] = 'X';
+      a[0][2] = m;
       break;
     case 4:
-      a[1][0] = 'X';
+      a[1][0] = m;
       break;
     case 5:
-      a[1][1] = 'X';
+      a[1][1] = m;
       break;
     case 6:
-      a[1][2] = 'X';
+      a[1][2] = m;
       break;
     case 1:
-      a[2][0] = 'X';
+      a[2][0] = m;
       break;
     case 2:
-      a[2][1] = 'X';
+      a[2][1] = m;
       break;
     case 3:
-      a[2][2] = 'X';
+      a[2][2] = m;
       break;
+  }
+	
+}
 
-    }
+void print_matrix() {
+ 
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
         {
@@ -95,54 +94,11 @@ void print_matrix(int x) {
       if (i < 2)
         cout << "\n-----\n";
     }
+  
     cout << endl << endl << "-----------------------------" << endl << endl;
   }
-}
-
-void print_com(int x) {
-  switch (x) {
-  case 7:
-    a[0][0] = 'O';
-    break;
-  case 8:
-    a[0][1] = 'O';
-    break;
-  case 9:
-    a[0][2] = 'O';
-    break;
-  case 4:
-    a[1][0] = 'O';
-    break;
-  case 5:
-    a[1][1] = 'O';
-    break;
-  case 6:
-    a[1][2] = 'O';
-    break;
-  case 1:
-    a[2][0] = 'O';
-    break;
-  case 2:
-    a[2][1] = 'O';
-    break;
-  case 3:
-    a[2][2] = 'O';
-    break;
-
-  }
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; j++) {
-      {
-        cout << a[i][j];
-        if (j < 2)
-          cout << "|";
-      }
-    }
-    if (i < 2)
-      cout << "\n-----\n";
-  }
-  cout << endl << endl << "-----------------------------" << endl << endl;
-}
+  
+ 
 
 int check(int x) {
   switch (x) {
@@ -195,14 +151,14 @@ int check(int x) {
   }
 }
 
-void random() {
+int random() {
   int c;
   srand((unsigned) time(0));
   do {
     randomnum = (1 + rand() % 9);
     c = check(randomnum);
   } while (c != 0);
-  print_com(randomnum);
+ return randomnum;
 }
 
 int win() {
