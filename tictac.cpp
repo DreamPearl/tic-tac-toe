@@ -5,7 +5,7 @@
 #include <iostream>
 
 using namespace std;
-void assign_matrix(int,char);
+void assign_matrix(int, char);
 void print_matrix();
 int check(int);
 int win();
@@ -21,84 +21,90 @@ char a[3][3] = {
   ' ',
   ' '
 };
-int x, randomnum;
-char y='X',z='O';
+int x;
+
 
 int main() {
+	char y;
   x = 0;
   print_matrix();
   cout << "\n\n";
-  cin >> x;
-  	assign_matrix(x,y);
-  cout << endl << endl;
-  print_matrix();
-  int rn;
-  for (int i = 0; i < 4; i++) {
-  rn= random();
-     assign_matrix(rn,z);
+  int n;
+  for (int i = 0; i < 9; i++) {
+    int n = 2;
+    if (i % 2 != 0) {
+      x = random();
+      y='O';
+    } else {
+      cin >> x;
+      y='X';
+	   }
+    assign_matrix(x, y);
     print_matrix();
-    win();
-    cin >> x;
-   	assign_matrix(x,y);
-    cout << endl << endl;
-    print_matrix();
-    win();
+    n = win(); 
+
+      if (n == 1) {
+      	cout<<"\n"<<"\n";
+        cout << "CONGRATULATIONS!!! YOU WIN";
+        exit(0);
+      } else if (n == 0) {
+      		cout<<"\n"<<"\n";
+        cout << "SORRY!!! YOU LOST";
+        exit(0);
+      }
+    
+
   }
 }
- 
-void assign_matrix(int x,char m)
-{
-switch (x)
- {
-    case 7:
-      a[0][0] = m;
-      break;
-    case 8:
-      a[0][1] = m;
-      break;
-    case 9:
-      a[0][2] = m;
-      break;
-    case 4:
-      a[1][0] = m;
-      break;
-    case 5:
-      a[1][1] = m;
-      break;
-    case 6:
-      a[1][2] = m;
-      break;
-    case 1:
-      a[2][0] = m;
-      break;
-    case 2:
-      a[2][1] = m;
-      break;
-    case 3:
-      a[2][2] = m;
-      break;
+
+void assign_matrix(int x, char m) {
+  switch (x) {
+  case 7:
+    a[0][0] = m;
+    break;
+  case 8:
+    a[0][1] = m;
+    break;
+  case 9:
+    a[0][2] = m;
+    break;
+  case 4:
+    a[1][0] = m;
+    break;
+  case 5:
+    a[1][1] = m;
+    break;
+  case 6:
+    a[1][2] = m;
+    break;
+  case 1:
+    a[2][0] = m;
+    break;
+  case 2:
+    a[2][1] = m;
+    break;
+  case 3:
+    a[2][2] = m;
+    break;
   }
-	
+
 }
 
 void print_matrix() {
- 
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        {
-          cout << a[i][j];
-          if (j < 2)
-            cout << "|";
-        }
+  system("cls");
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      {
+        cout << a[i][j];
+        if (j < 2)
+          cout << "|";
       }
-      if (i < 2)
-        cout << "\n-----\n";
     }
-  
-    cout << endl << endl << "-----------------------------" << endl << endl;
+    if (i < 2)
+      cout << "\n-----\n";
   }
-  
- 
+
+}
 
 int check(int x) {
   switch (x) {
@@ -152,38 +158,34 @@ int check(int x) {
 }
 
 int random() {
-  int c;
+  int c, randomnum;
   srand((unsigned) time(0));
   do {
     randomnum = (1 + rand() % 9);
     c = check(randomnum);
   } while (c != 0);
- return randomnum;
+  return randomnum;
 }
 
 int win() {
 
   if ((a[0][2] == a[1][1]) && (a[1][1] == a[2][0]) && ((a[0][2] == 'X') || (a[0][2] == 'O'))) {
-    cout << endl << endl;
     if ((a[0][2]) == 'X')
-      cout << "CONGRATULATIONS!!! YOU WIN";
+      return 1;
     else if ((a[0][2]) == 'O')
-      cout << "SORRY!!! YOU LOST";
-    exit(0);
-
+      return 0;
   }
 
   if ((a[0][0] == a[1][1]) && (a[1][1] == a[2][2]) && ((a[0][0] == 'X') || (a[0][0] == 'O'))) {
-    cout << endl << endl;
     if ((a[0][0]) == 'X')
-      cout << "CONGRATULATIONS!!! YOU WIN";
+      return 1;
     else if ((a[0][0]) == 'O')
-      cout << "SORRY!!! YOU LOST";
-    exit(0);
+      return 0;
+    
   }
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 3; i++) {
     int acountx = 0, acounty = 0, bcountx = 0, bcounty = 0;
-    for (int j = 0; j < 4; j++) {
+    for (int j = 0; j < 3; j++) {
 
       if ((a[i][j]) == 'X')
         acountx++;
@@ -199,15 +201,15 @@ int win() {
     if (acountx == 3 || bcountx == 3)
 
     {
-      cout << endl << endl;
-      cout << "CONGRATULATIONS!!! YOU WIN";
-      exit(0);
+      return 1;
+     
     }
     if (acounty == 3 || bcounty == 3) {
-      cout << endl << endl;
-      cout << "SORRY!!! YOU LOST";
-      exit(0);
+      return 0;
+      
     }
+   
   }
+  return 2;
 
 }
