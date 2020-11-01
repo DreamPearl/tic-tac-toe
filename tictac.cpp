@@ -10,51 +10,86 @@ void print_matrix();
 int check(int);
 int win();
 int random();
-char a[3][3] = {
-  ' ',
-  ' ',
-  ' ',
-  ' ',
-  ' ',
-  ' ',
-  ' ',
-  ' ',
-  ' '
-};
-int x;
-
+void start_singlematch();
+int take_input();
+void clear_matrix();
+char a[3][3];
 
 int main() {
-	char y;
-  x = 0;
+
+  char con;
+  do {
+    start_singlematch();
+    cout << "Do you want to continue? (Y/N)\n";
+    cin >> con;
+  } while (con == 'Y' || con == 'y');
+  exit(0);
+}
+
+void start_singlematch()
+
+{
+  char y;
+  int x = 0;
+  int in ;
+  clear_matrix();
+  while (1) {
+    cout << "Press 1 for single player and press 2 for multi player(2 player).\n";
+    cin >> in ;
+    if ( in == 1 || in == 2)
+      break;
+    cout << "Wrong input !!! Please select either 1 or 2.\n";
+  }
   print_matrix();
   cout << "\n\n";
   int n;
   for (int i = 0; i < 9; i++) {
     int n = 2;
     if (i % 2 != 0) {
-      x = random();
-      y='O';
+      if ( in == 1)
+        x = random();
+      else if ( in == 2) {
+        x = take_input();
+      }
+      y = 'O';
     } else {
-      cin >> x;
-      y='X';
-	   }
+      x = take_input();
+      y = 'X';
+    }
     assign_matrix(x, y);
     print_matrix();
-    n = win(); 
+    n = win();
+    cout << "\n" << "\n";
+    if (n == 1) {
+      cout << "CONGRATULATIONS!!! Player 1 (X) wins!!!";
+      cout << "\n" << "\n";
+      return;
+    } else if (n == 0) {
+      if ( in == 1) {
 
-      if (n == 1) {
-      	cout<<"\n"<<"\n";
-        cout << "CONGRATULATIONS!!! YOU WIN";
-        exit(0);
-      } else if (n == 0) {
-      		cout<<"\n"<<"\n";
         cout << "SORRY!!! YOU LOST";
-        exit(0);
+        cout << "\n" << "\n";
+      } else {
+        cout << "CONGRATULATIONS!!! Player 2 (O) wins!!!";
+        cout << "\n" << "\n";
       }
-    
+      return;
+
+    }
 
   }
+  cout << "JAO GHAR MATCH DRAW!!\n\n";
+}
+
+int take_input() {
+  int c1, x;
+  do {
+    cin >> x;
+    c1 = check(x);
+    if (c1 != 0)
+      cout << "Please type a vacant place number!!!";
+  } while (c1 != 0);
+  return x;
 }
 
 void assign_matrix(int x, char m) {
@@ -89,6 +124,14 @@ void assign_matrix(int x, char m) {
   }
 
 }
+void clear_matrix() {
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      a[i][j] = ' ';
+    }
+
+  }
+}
 
 void print_matrix() {
   system("cls");
@@ -112,47 +155,46 @@ int check(int x) {
     if ((a[0][0]) == ' ')
       return 0;
     else return 1;
-    //  break;
+
   case 8:
     if ((a[0][1]) == ' ')
       return 0;
     else return 1;
-    // break;
+
   case 9:
     if ((a[0][2]) == ' ')
       return 0;
     else return 1;
-    // break;
+
   case 4:
     if ((a[1][0]) == ' ')
       return 0;
     else return 1;
-    // break;
+
   case 5:
     if ((a[1][1]) == ' ')
       return 0;
     else return 1;
-    // break;
+
   case 6:
     if ((a[1][2]) == ' ')
       return 0;
     else return 1;
-    // break;
+
   case 1:
     if ((a[2][0]) == ' ')
       return 0;
     else return 1;
-    //break;
+
   case 2:
     if ((a[2][1]) == ' ')
       return 0;
     else return 1;
-    // break;
+
   case 3:
     if ((a[2][2]) == ' ')
       return 0;
     else return 1;
-    // break;
 
   }
 }
@@ -181,7 +223,7 @@ int win() {
       return 1;
     else if ((a[0][0]) == 'O')
       return 0;
-    
+
   }
   for (int i = 0; i < 3; i++) {
     int acountx = 0, acounty = 0, bcountx = 0, bcounty = 0;
@@ -202,13 +244,13 @@ int win() {
 
     {
       return 1;
-     
+
     }
     if (acounty == 3 || bcounty == 3) {
       return 0;
-      
+
     }
-   
+
   }
   return 2;
 
