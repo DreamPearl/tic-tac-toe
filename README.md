@@ -1,4 +1,4 @@
-# tic-tac-toe
+# Tic-Tac-Toe
 Single and multiplayer tic-tac-toe game.
 
 ### Screenshot
